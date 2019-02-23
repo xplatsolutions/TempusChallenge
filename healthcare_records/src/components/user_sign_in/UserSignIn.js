@@ -16,10 +16,6 @@ const theme = createMuiTheme({
 export class UserSignIn extends Component {
     
   state = {
-      redirect: { 
-          shouldRedirect: false,
-          redirectTo: ''
-        },
     username: "",
     password: "",
     users: [
