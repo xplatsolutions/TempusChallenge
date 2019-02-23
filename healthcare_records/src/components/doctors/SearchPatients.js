@@ -3,26 +3,41 @@ import React, {
     Fragment
 } from 'react';
 import Patient from '../patients/Patient';
-import PropTypes from 'prop-types';
 import FilterPatients from './FilterPatients';
 
 class SearchPatients extends Component {
+
+    state = {
+        patients: [
+            {
+                id: 1,
+                name: "Anakin Skywalker",
+                age: 38,
+                emailAddress: "anakin@tempus.com",
+                mailingAddress: "Somewhere in Galaxy",
+                phoneNumber: "8009001000"
+            },
+            {
+                id: 2,
+                name: "Master Yoda",
+                age: 38,
+                emailAddress: "yoda@tempus.com",
+                mailingAddress: "Somewhere in Galaxy",
+                phoneNumber: "8009001000"
+            }
+        ]
+    };
+
     render() {
         return ( 
             <Fragment>
                 <FilterPatients />
-                <Fragment>{this.props.patients.map((patient) => (
+                <Fragment>{this.state.patients.map((patient) => (
                             <Patient key={patient.id} patientDetails={patient} patientClicked={this.props.patientClicked} />))}
                 </Fragment>
             </Fragment>
         )
     }
-}
-
-// PropTypes
-SearchPatients.propTypes = {
-    patients: PropTypes.array.isRequired,
-    patientClicked: PropTypes.func.isRequired
 }
 
 export default SearchPatients;

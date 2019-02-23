@@ -11,7 +11,7 @@ export class Patient extends Component {
 
     return (
       <div>
-        <p onClick={this.props.patientClicked.bind(this, id)}>{ name }</p>
+        <p>{ name }</p>
       </div>
     )
   }

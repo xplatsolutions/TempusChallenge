@@ -1,10 +1,25 @@
 import React, { Component, Fragment } from "react";
-import Appbar from "@material-ui/core/AppBar";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { withRouter } from 'react-router';
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  }
+});
 
 export class UserSignIn extends Component {
+    
   state = {
+      redirect: { 
+          shouldRedirect: false,
+          redirectTo: ''
+        },
     username: "",
     password: "",
     users: [
@@ -22,8 +37,8 @@ export class UserSignIn extends Component {
   };
 
   handleChange = input => e => {
-      this.setState({[input]: e.target.value});
-  }
+    this.setState({ [input]: e.target.value });
+  };
 
   userSignIn = e => {
     //e.PreventDefault();
@@ -40,11 +55,13 @@ export class UserSignIn extends Component {
       if (user.role === "doctor") {
         // route to search patient
         console.log("route to search patient");
+        this.props.history.push('/searchpatients');
       }
 
       if (user.role === "patient") {
         // route to patient details
         console.log("route to patient details");
+        this.props.history.push('/patientdetails');
       }
     } else {
       console.log("no login");
@@ -54,37 +71,46 @@ export class UserSignIn extends Component {
   render() {
     return (
       <Fragment>
-        <Appbar title="Sign In" />
-        <br />
-        <TextField 
-            id="standard-username" 
-            label="Username" 
+        <MuiThemeProvider theme={theme}>
+          {/* <SearchPatients patients={this.state.patients} patientClicked={this.patientClicked} /> */}
+
+          <AppBar position="static" color="primary">
+            <Toolbar>
+                <Typography variant="h5"color="inherit">Tempus</Typography>
+            </Toolbar>
+          </AppBar>
+
+          <br />
+          <TextField
+            id="standard-username"
+            label="Username"
             margin="normal"
-            onChange={this.handleChange('username')}
-         />
-        <br />
-        <TextField
-          id="standard-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          margin="normal"
-          onChange={this.handleChange('password')}
-        />
-        <br />
-        <br />
-        <br />
-        <Button
-          variant="contained"
-          size="medium"
-          color="primary"
-          onClick={this.userSignIn}
-        >
-          Sign In
-        </Button>
+            onChange={this.handleChange("username")}
+          />
+          <br />
+          <TextField
+            id="standard-password-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            margin="normal"
+            onChange={this.handleChange("password")}
+          />
+          <br />
+          <br />
+          <br />
+          <Button
+            variant="contained"
+            size="medium"
+            color="primary"
+            onClick={this.userSignIn}
+          >
+            Login
+          </Button>
+        </MuiThemeProvider>
       </Fragment>
     );
   }
 }
 
-export default UserSignIn;
+export default withRouter(UserSignIn);
