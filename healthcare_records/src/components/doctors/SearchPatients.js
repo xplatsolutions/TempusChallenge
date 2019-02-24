@@ -2,7 +2,6 @@ import React, {
     Component,
     Fragment
 } from 'react';
-import Patient from '../patients/Patient';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -11,6 +10,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import PropTypes from 'prop-types';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import PatientsList from '../patients/PatientsList';
 
 const styles = theme => ({
     root: {
@@ -81,7 +81,8 @@ class SearchPatients extends Component {
                 age: 38,
                 emailAddress: "anakin@tempus.com",
                 mailingAddress: "Somewhere in Galaxy",
-                phoneNumber: "8009001000"
+                phoneNumber: "8009001000",
+                avatar: "https://www.gannett-cdn.com/-mm-/54b8e3ee2352c148b2e654ed748d364d3e2e911a/c=365-0-3068-2032/local/-/media/2017/03/01/USATODAY/USATODAY/636239782868557609-MAG-HAYDEN-7730471.JPG?width=534&height=401&fit=crop"
             },
             {
                 id: 2,
@@ -89,7 +90,8 @@ class SearchPatients extends Component {
                 age: 38,
                 emailAddress: "yoda@tempus.com",
                 mailingAddress: "Somewhere in Galaxy",
-                phoneNumber: "8009001000"
+                phoneNumber: "8009001000",
+                avatar: "https://pmcvariety.files.wordpress.com/2013/05/yoda.jpg?w=640&h=360&crop=1"
             }
         ]
     };
@@ -115,10 +117,12 @@ class SearchPatients extends Component {
                         </div>
                 </Toolbar>
                 </AppBar> 
-            
-                <Fragment>{this.state.patients.map((patient) => (
+                
+                <PatientsList patients={this.state.patients} />
+
+                {/* <Fragment>{this.state.patients.map((patient) => (
                             <Patient key={patient.id} patientDetails={patient} patientClicked={this.props.patientClicked} />))}
-                </Fragment>
+                </Fragment> */}
             </Fragment>
         )
     }
