@@ -1,28 +1,20 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class PatientDetails extends Component {
+  render() {
+    const { patient } = this.props.location.state;
 
-    state = {
-        patientDetails: {
-            id: 1,
-            name: "Jon Smith",
-            age: 38,
-            emailAddress: "jonsmith@tempus.com",
-            mailingAddress: "Somewhere in Manhattan",
-            phoneNumber: "8009001000"
-        }
-    }
-
-    render() {
-        console.log(this.props.patientDetails)
-        return ( 
-        <div>
-            <h1>Patient Details</h1> 
-        </div>
-        );
-    }
+    return (
+      <div>
+        <h1>{patient.name}</h1>
+      </div>
+    );
+  }
 }
+
+PatientDetails.propTypes = {
+  patient: PropTypes.object.isRequired
+};
 
 export default PatientDetails;
