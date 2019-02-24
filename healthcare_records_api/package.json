@@ -1,0 +1,19 @@
+{
+    "name": "tempus-healthcare-information-api",
+    "version": "1.0.0",
+    "description": "Healthcare Information API",
+    "main": "app.js",
+    "scripts": {
+        "test": "node test/run",
+        "start": "nodemon server.js"
+    },
+    "author": "George Taskos",
+    "license": "ISC",
+    "private": true,
+    "dependencies": {
+        "express": "^4.16.4",
+        "mongoose": "^5.4.15",
+        "morgan": "^1.9.1",
+        "nodemon": "^1.18.10"
+    }
+}

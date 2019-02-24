@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { withRouter } from 'react-router';
+import { withRouter } from "react-router";
 
 const theme = createMuiTheme({
   typography: {
@@ -14,24 +14,28 @@ const theme = createMuiTheme({
 });
 
 export class UserSignIn extends Component {
-    
-  state = {
-    username: "",
-    password: "",
-    users: [
-      {
-        username: "anakin",
-        password: "george",
-        role: "patient"
-      },
-      {
-        username: "yoda",
-        password: "george",
-        role: "doctor"
-      }
-    ]
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+      users: [
+        {
+          id: "1",
+          username: "anakin",
+          password: "george",
+          role: "patient"
+        },
+        {
+          id: "2",
+          username: "yoda",
+          password: "george",
+          role: "doctor"
+        }
+      ]
+    };
+  }
+  
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
   };
@@ -50,14 +54,16 @@ export class UserSignIn extends Component {
       // move to search patients if doctor or patient details of patient
       if (user.role === "doctor") {
         // route to search patient
-        console.log("route to search patient");
-        this.props.history.push('/searchpatients');
+        this.props.history.push("/searchpatients");
       }
 
       if (user.role === "patient") {
+        // fetch the patient details with user.id
         // route to patient details
-        console.log("route to patient details");
-        this.props.history.push('/patientdetails');
+        this.props.history.push({
+          pathname: "/patientdetails",
+          state: { patient: {}, readOnly: false }
+        });
       }
     } else {
       console.log("no login");
@@ -72,7 +78,9 @@ export class UserSignIn extends Component {
 
           <AppBar position="static" color="primary">
             <Toolbar>
-                <Typography variant="h5"color="inherit">Tempus</Typography>
+              <Typography variant="h5" color="inherit">
+                Tempus
+              </Typography>
             </Toolbar>
           </AppBar>
 

@@ -22,10 +22,9 @@ const styles = theme => ({
 
 export class PatientsList extends Component {
   onPatientClick = patient => e => {
-    console.log(`Patient ${patient.name} clicked`);
     this.props.history.push({
         pathname: '/patientdetails',
-        state: { patient: patient }
+        state: { patient: patient, readOnly: true }
     });
   };
 
