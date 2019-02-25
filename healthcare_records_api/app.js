@@ -12,12 +12,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 mongoose.connect(
-  process.env.MONGOURL ||
-    "mongodb+srv://gtas:v1GO1pPdmLLisy2U@cluster0-xpmuh.mongodb.net/test?retryWrites=true",
+  process.env.MONGOURL,
   {
     useNewUrlParser: true
   }
 );
+
+// const ObjectId = (rnd = r16 => Math.floor(r16).toString(16)) =>
+//     rnd(Date.now() / 1000) + ' '.repeat(16).replace(/./g, () => rnd(Math.random() * 16));
+// console.log(ObjectId());
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));

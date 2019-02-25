@@ -10,8 +10,24 @@ const patientSchema = new Schema({
         type: String,
         required: true
     },
+    age: {
+        type: String,
+        required: true
+    },
+    emailAddress: {
+        type: String,
+        required: true
+    },
+    mailingAddress: {
+        type: String,
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        required: true
+    }
 });
 
-let Patient = mongoose.model('Patient', patientSchema, 'Patient');
+const Patient = mongoose.model('Patient', patientSchema, 'Patients');
 
 module.exports = Patient;

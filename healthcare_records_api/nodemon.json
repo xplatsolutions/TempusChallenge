@@ -1,0 +1,6 @@
+{
+    "env":{
+        "MONGOURL": "mongodb+srv://gtas:v1GO1pPdmLLisy2U@cluster0-xpmuh.mongodb.net/tempus_healthcare_information?retryWrites=true",
+        "PORT": 3002
+    }
+}
