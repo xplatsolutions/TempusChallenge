@@ -6,6 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router";
+import axios from 'axios';
 
 const theme = createMuiTheme({
   typography: {
@@ -41,9 +42,26 @@ export class UserSignIn extends Component {
   };
 
   userSignIn = e => {
-    //e.PreventDefault();
+    e.preventDefault();
 
     const { users, username, password } = this.state;
+    const postData = {
+      username,
+      password
+    };
+    //axios.defaults.withCredentials = true;
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    axios.post('http://localhost:3002/users/signin', postData, axiosConfig)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(err => {
+          console.log(err);
+        });
 
     const signInUser = users.filter(user => {
       return user.username === username && user.password === password;
@@ -54,16 +72,16 @@ export class UserSignIn extends Component {
       // move to search patients if doctor or patient details of patient
       if (user.role === "doctor") {
         // route to search patient
-        this.props.history.push("/searchpatients");
+        //this.props.history.push("/searchpatients");
       }
 
       if (user.role === "patient") {
         // fetch the patient details with user.id
         // route to patient details
-        this.props.history.push({
-          pathname: "/patientdetails",
-          state: { patient: {}, readOnly: false }
-        });
+        // this.props.history.push({
+        //   pathname: "/patientdetails",
+        //   state: { patient: {}, readOnly: false }
+        // });
       }
     } else {
       console.log("no login");
