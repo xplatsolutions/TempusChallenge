@@ -3,9 +3,6 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 
-const patientsRoutes = require("./api/routes/patients");
-const usersRoutes = require("./api/routes/users");
-
 app.use(morgan("dev"));
 
 app.use(express.urlencoded({ extended: false }));
@@ -29,7 +26,7 @@ db.once("open", function() {
 });
 
 // Allow CORS
-app.use((error, req, res, next) => {
+app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Header",
@@ -45,6 +42,9 @@ app.use((error, req, res, next) => {
 });
 
 // App routes before error handling middlewares
+const patientsRoutes = require("./api/routes/patients");
+const usersRoutes = require("./api/routes/users");
+
 app.use("/patients", patientsRoutes);
 app.use("/users", usersRoutes);
 
