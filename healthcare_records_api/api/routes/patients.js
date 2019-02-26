@@ -5,16 +5,17 @@ const Patient = require("../../models/patient");
 
 router.get("/", (req, res, next) => {
   Patient.find()
+    .populate('userId', '_id username')
     .exec()
     .then(patients => {
       res.status(200).json(patients);
     })
     .catch(err => {
-        res.status(500).json({
-            error: {
-                message: "Error fetching patients"
-            }
-        }); 
+      res.status(500).json({
+        error: {
+          message: "Error fetching patients"
+        }
+      });
     });
 });
 
@@ -23,6 +24,7 @@ router.put("/", (req, res, next) => {
 
   const mongoPatient = new Patient({
     _id: new mongoose.Types.ObjectId(patientPayload.id),
+    userId: new mongoose.Types.ObjectId(patientPayload.userId),
     name: patientPayload.name,
     age: patientPayload.age,
     emailAddress: patientPayload.emailAddress,
@@ -31,7 +33,8 @@ router.put("/", (req, res, next) => {
   });
 
   Patient.findOneAndUpdate({ _id: mongoPatient._id }, mongoPatient, {
-    new: true
+    new: true,
+    upsert: true
   })
     .exec()
     .then(doc => {
@@ -41,7 +44,7 @@ router.put("/", (req, res, next) => {
           patient: doc
         });
       } else {
-        es.status(404).json({
+        res.status(404).json({
           error: {
             message: `Could not find a patient with id ${patientPayload.id}`
           }

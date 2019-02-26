@@ -6,6 +6,11 @@ const patientSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     name: {
         type: String,
         required: true
