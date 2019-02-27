@@ -30,6 +30,9 @@ const patientSchema = new Schema({
     phoneNumber: {
         type: String,
         required: true
+    },
+    avatar: {
+        type: String
     }
 });
 

@@ -1,26 +1,52 @@
-import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import { withRouter } from "react-router";
-import { connect } from "react-redux";
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
-    width: "100%",
+    width: '100%',
     backgroundColor: theme.palette.background.paper
   },
   inline: {
-    display: "inline"
+    display: 'inline'
   }
 });
 
 export class PatientsList extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      patients: []
+    };
+  }
+
+  componentDidMount() {
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/patients`, axiosConfig)
+      .then(response => {
+        this.setState({ patients: response.data });
+      })
+      .catch(err => {
+        console.log(`Error fetching patients data: ${err}`);
+      });
+  }
+
   onPatientClick = patient => e => {
     this.props.history.push({
         pathname: '/patientdetails',
@@ -29,16 +55,16 @@ export class PatientsList extends Component {
   };
 
   render() {
-    const { classes, patients } = this.props;
-
+    const { classes } = this.props;
+    
     return (
       <List className={classes.root}>
         <Fragment>
-          {patients.map(patient => (
+          {this.state.patients.map(patient => (
             <ListItem
               button
               divider
-              alignItems="flex-start"
+              alignItems='flex-start'
               onClick={this.onPatientClick(patient)}
             >
               <ListItemAvatar>
@@ -49,9 +75,9 @@ export class PatientsList extends Component {
                 secondary={
                   <React.Fragment>
                     <Typography
-                      component="span"
+                      component='span'
                       className={classes.inline}
-                      color="textPrimary"
+                      color='textPrimary'
                     >
                       {patient.mailingAddress} - {patient.age}
                     </Typography>
@@ -67,8 +93,7 @@ export class PatientsList extends Component {
 }
 
 PatientsList.propTypes = {
-  classes: PropTypes.object.isRequired,
-  patients: PropTypes.array.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default withRouter(connect()(withStyles(styles)(PatientsList)));

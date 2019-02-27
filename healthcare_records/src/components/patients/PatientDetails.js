@@ -1,21 +1,22 @@
-import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import MaskedInput from "react-text-mask";
-import NumberFormat from "react-number-format";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import MaskedInput from 'react-text-mask';
+import NumberFormat from 'react-number-format';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import axios from 'axios';
 
 const styles = theme => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap"
+    display: 'flex',
+    flexWrap: 'wrap'
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -40,22 +41,22 @@ function TextMaskCustom(props) {
         inputRef(ref ? ref.inputElement : null);
       }}
       mask={[
-        "(",
+        '(',
         /[1-9]/,
         /\d/,
         /\d/,
-        ")",
-        " ",
+        ')',
+        ' ',
         /\d/,
         /\d/,
         /\d/,
-        "-",
+        '-',
         /\d/,
         /\d/,
         /\d/,
         /\d/
       ]}
-      placeholderChar={"\u2000"}
+      placeholderChar={'\u2000'}
       showMask
     />
   );
@@ -91,9 +92,11 @@ NumberFormatCustom.propTypes = {
 class PatientDetails extends Component {
   constructor(props) {
     super(props);
+
     const { patient } = this.props.location.state;
     this.state = {
-      id: patient.id,
+      _id: patient._id,
+      userId: patient.userId._id,
       name: patient.name,
       age: patient.age,
       emailAddress: patient.emailAddress,
@@ -108,7 +111,28 @@ class PatientDetails extends Component {
   };
 
   updatePatientDetails = e => {
-    console.log(`send to server: ${this.state.name}`);
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    axios
+      .put(
+        `${process.env.REACT_APP_API_URL}/patients`,
+        this.state,
+        axiosConfig
+      )
+      .then(response => {
+        if (response.status === 200) {
+          console.log('Updated successfully');
+        } else {
+          console.log(`Updated unsuccessful: ${response.status} - ${response.data}`);
+        }
+      })
+      .catch(err => {
+        console.log(`Error updating patient details: ${err}`);
+      });
   };
 
   render() {
@@ -124,91 +148,91 @@ class PatientDetails extends Component {
 
     return (
       <Fragment>
-        <AppBar position="static" color="primary">
+        <AppBar position='static' color='primary'>
           <Toolbar>
-            <Typography variant="h5" color="inherit">
+            <Typography variant='h5' color='inherit'>
               Details
             </Typography>
           </Toolbar>
         </AppBar>
-        <form className={classes.container} noValidate autoComplete="off">
+        <form className={classes.container} noValidate autoComplete='off'>
           <TextField
-            id="patient-name"
-            label="Name"
+            id='patient-name'
+            label='Name'
             className={classes.textField}
             value={this.state.name}
-            onChange={this.handleChange("name")}
-            margin="normal"
+            onChange={this.handleChange('name')}
+            margin='normal'
             InputProps={readOnlyInputProps}
           />
 
           <TextField
-            id="patient-age"
-            label="Age"
+            id='patient-age'
+            label='Age'
             className={classes.textField}
             value={this.state.age}
-            onChange={this.handleChange("age")}
-            margin="normal"
+            onChange={this.handleChange('age')}
+            margin='normal'
             InputProps={readOnlyInputProps}
           />
 
           <TextField
-            id="patient-emailAddress"
-            label="Email Address"
+            id='patient-emailAddress'
+            label='Email Address'
             className={classes.textField}
             value={this.state.emailAddress}
-            onChange={this.handleChange("emailAddress")}
-            margin="normal"
+            onChange={this.handleChange('emailAddress')}
+            margin='normal'
             InputProps={readOnlyInputProps}
           />
 
           <TextField
-            id="patient-mailingAddress"
-            label="Mailing Address"
+            id='patient-mailingAddress'
+            label='Mailing Address'
             className={classes.textField}
             value={this.state.mailingAddress}
-            onChange={this.handleChange("mailingAddress")}
-            margin="normal"
+            onChange={this.handleChange('mailingAddress')}
+            margin='normal'
             InputProps={readOnlyInputProps}
           />
 
           <TextField
-            id="patient-phoneNumber"
-            label="Phone Number"
+            id='patient-phoneNumber'
+            label='Phone Number'
             className={classes.textField}
             value={this.state.phoneNumber}
-            onChange={this.handleChange("phoneNumber")}
-            margin="normal"
+            onChange={this.handleChange('phoneNumber')}
+            margin='normal'
             InputProps={readOnlyInputProps}
           />
 
-          <FormControl margin="normal" className={classes.textField}>
-            <InputLabel htmlFor="formatted-text-mask-input">
+          <FormControl margin='normal' className={classes.textField}>
+            <InputLabel htmlFor='formatted-text-mask-input'>
               Phone Number
             </InputLabel>
             <Input
               value={this.state.phoneNumber}
-              onChange={this.handleChange("phoneNumber")}
-              id="formatted-text-mask-input"
+              onChange={this.handleChange('phoneNumber')}
+              id='formatted-text-mask-input'
               inputComponent={TextMaskCustom}
             />
           </FormControl>
           
           <TextField
-            id="patient-age"
-            label="Age"
+            id='patient-age'
+            label='Age'
             className={classes.textField}
             value={this.state.age}
-            onChange={this.handleChange("numberformat")}
-            margin="normal"
+            onChange={this.handleChange('numberformat')}
+            margin='normal'
             InputProps={ageReadOnlyInputProps}
           />
         </form>
         <br />
         <Button
-          variant="contained"
-          size="medium"
-          color="primary"
+          variant='contained'
+          size='medium'
+          color='primary'
           onClick={this.updatePatientDetails}
         >
           Update

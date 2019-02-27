@@ -2,9 +2,9 @@ import React, {
     Component,
     Fragment
 } from 'react';
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import PropTypes from 'prop-types';
@@ -73,42 +73,20 @@ const styles = theme => ({
 });
 
 class SearchPatients extends Component {
-    state = {
-        patients: [
-            {
-                id: 1,
-                name: "Anakin Skywalker",
-                age: 38,
-                emailAddress: "anakin@tempus.com",
-                mailingAddress: "Somewhere in Galaxy",
-                phoneNumber: "8009001000",
-                avatar: "https://www.gannett-cdn.com/-mm-/54b8e3ee2352c148b2e654ed748d364d3e2e911a/c=365-0-3068-2032/local/-/media/2017/03/01/USATODAY/USATODAY/636239782868557609-MAG-HAYDEN-7730471.JPG?width=534&height=401&fit=crop"
-            },
-            {
-                id: 2,
-                name: "Master Yoda",
-                age: 38,
-                emailAddress: "yoda@tempus.com",
-                mailingAddress: "Somewhere in Galaxy",
-                phoneNumber: "8009001000",
-                avatar: "https://pmcvariety.files.wordpress.com/2013/05/yoda.jpg?w=640&h=360&crop=1"
-            }
-        ]
-    };
 
     render() {
         return (
             <Fragment>
-            <AppBar position="static" color="primary">
+            <AppBar position='static' color='primary'>
                 <Toolbar>
-                    <Typography variant="h5" color="inherit">Doctor</Typography>
+                    <Typography variant='h5' color='inherit'>Doctor</Typography>
                         <div className={this.props.classes.grow} />
                         <div className={this.props.classes.search}>
                             <div className={this.props.classes.searchIcon}>
                                 <SearchIcon />
                             </div>
                             <InputBase
-                                placeholder="Filter patients by name"
+                                placeholder='Filter patients by name'
                                 classes={{
                                     root: this.props.classes.inputRoot,
                                     input: this.props.classes.inputInput,
@@ -117,8 +95,8 @@ class SearchPatients extends Component {
                         </div>
                 </Toolbar>
                 </AppBar> 
-                
-                <PatientsList patients={this.state.patients} />
+
+                <PatientsList />
 
                 {/* <Fragment>{this.state.patients.map((patient) => (
                             <Patient key={patient.id} patientDetails={patient} patientClicked={this.props.patientClicked} />))}

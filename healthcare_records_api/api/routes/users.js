@@ -11,7 +11,6 @@ router.post("/signin", (req, res, next) => {
     .exec()
     .then(user => {
       if (user) {
-        console.log("User found");
         bcrypt.compare(password, user.password, (err, compareResult) => {
           if (err || !compareResult) {
             res.status(401).json({
@@ -22,7 +21,8 @@ router.post("/signin", (req, res, next) => {
           } else {
             res.status(200).json({
               _id: user._id,
-              username: user.username
+              username: user.username,
+              role: user.role
             });
           }
         });
