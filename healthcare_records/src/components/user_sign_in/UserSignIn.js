@@ -3,16 +3,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router";
 import axios from "axios";
-
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true
-  }
-});
 
 export class UserSignIn extends Component {
   constructor(props) {
@@ -89,45 +82,40 @@ export class UserSignIn extends Component {
   render() {
     return (
       <Fragment>
-        <MuiThemeProvider theme={theme}>
-          {/* <SearchPatients patients={this.state.patients} patientClicked={this.patientClicked} /> */}
-
-          <AppBar position="static" color="primary">
-            <Toolbar>
-              <Typography variant="h5" color="inherit">
-                Tempus
-              </Typography>
-            </Toolbar>
-          </AppBar>
-
-          <br />
-          <TextField
-            id="standard-username"
-            label="Username"
-            margin="normal"
-            onChange={this.handleChange("username")}
-          />
-          <br />
-          <TextField
-            id="standard-password-input"
-            label="Password"
-            type="password"
-            autoComplete="current-password"
-            margin="normal"
-            onChange={this.handleChange("password")}
-          />
-          <br />
-          <br />
-          <br />
-          <Button
-            variant="contained"
-            size="medium"
-            color="primary"
-            onClick={this.userSignIn}
-          >
-            Login
-          </Button>
-        </MuiThemeProvider>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography variant="h5" color="inherit">
+              Tempus
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <br />
+        <TextField
+          id="standard-username"
+          label="Username"
+          margin="normal"
+          onChange={this.handleChange("username")}
+        />
+        <br />
+        <TextField
+          id="standard-password-input"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          margin="normal"
+          onChange={this.handleChange("password")}
+        />
+        <br />
+        <br />
+        <br />
+        <Button
+          variant="contained"
+          size="medium"
+          color="primary"
+          onClick={this.userSignIn}
+        >
+          Login
+        </Button>
       </Fragment>
     );
   }
