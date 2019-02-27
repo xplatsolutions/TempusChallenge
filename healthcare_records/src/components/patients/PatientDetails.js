@@ -194,7 +194,7 @@ class PatientDetails extends Component {
             InputProps={readOnlyInputProps}
           />
 
-          <TextField
+          {/* <TextField
             id="patient-phoneNumber"
             label="Phone Number"
             className={classes.textField}
@@ -202,7 +202,7 @@ class PatientDetails extends Component {
             onChange={this.handleChange("phoneNumber")}
             margin="normal"
             InputProps={readOnlyInputProps}
-          />
+          /> */}
 
           <FormControl margin="normal" className={classes.textField}>
             <InputLabel htmlFor="formatted-text-mask-input">

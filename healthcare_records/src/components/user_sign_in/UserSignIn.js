@@ -18,7 +18,7 @@ export class UserSignIn extends Component {
 
   handleChange = input => e => {
     this.setState({ [input]: e.target.value });
-  };
+  }
 
   userSignIn = e => {
     e.preventDefault();

@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import PatientsList from "../patients/PatientsList";
+import axios from "axios";
 
 const styles = theme => ({
   root: {
@@ -70,6 +71,48 @@ const styles = theme => ({
 });
 
 class SearchPatients extends Component {
+  constructor() {
+    super();
+    this.state = {
+      patients: [],
+      filteredPatients: []
+    };
+  }
+
+  componentDidMount() {
+    const axiosConfig = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/patients`, axiosConfig)
+      .then(response => {
+        this.setState({
+          patients: response.data,
+          filteredPatients: response.data
+        });
+      })
+      .catch(err => {
+        console.log(`Error fetching patients data: ${err}`);
+      });
+  }
+
+  filterPatients = e => {
+    var filtertext = e.target.value;
+    console.log(filtertext);
+    let filteredPatients = this.state.patients;
+    
+    filteredPatients = filteredPatients.filter(patient => 
+        patient.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1
+    );
+
+    this.setState({
+      filteredPatients
+    });
+  }
+
   render() {
     return (
       <Fragment>
@@ -89,16 +132,13 @@ class SearchPatients extends Component {
                   root: this.props.classes.inputRoot,
                   input: this.props.classes.inputInput
                 }}
+                onChange={this.filterPatients}
               />
             </div>
           </Toolbar>
         </AppBar>
 
-        <PatientsList />
-
-        {/* <Fragment>{this.state.patients.map((patient) => (
-                            <Patient key={patient.id} patientDetails={patient} patientClicked={this.props.patientClicked} />))}
-                </Fragment> */}
+        <PatientsList patients={this.state.filteredPatients} />
       </Fragment>
     );
   }
