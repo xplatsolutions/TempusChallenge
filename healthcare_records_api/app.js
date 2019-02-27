@@ -1,19 +1,16 @@
-const mongoose = require('mongoose');
-const express = require('express');
+const mongoose = require("mongoose");
+const express = require("express");
 const app = express();
-const morgan = require('morgan');
+const morgan = require("morgan");
 
 app.use(morgan("dev"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-mongoose.connect(
-  process.env.MONGOURL,
-  {
-    useNewUrlParser: true
-  }
-);
+mongoose.connect(process.env.MONGOURL, {
+  useNewUrlParser: true
+});
 
 // const ObjectId = (rnd = r16 => Math.floor(r16).toString(16)) =>
 //     rnd(Date.now() / 1000) + ' '.repeat(16).replace(/./g, () => rnd(Math.random() * 16));

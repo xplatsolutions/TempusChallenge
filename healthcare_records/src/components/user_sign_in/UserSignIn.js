@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import { withRouter } from 'react-router';
-import axios from 'axios';
+import React, { Component, Fragment } from "react";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { withRouter } from "react-router";
+import axios from "axios";
 
 const theme = createMuiTheme({
   typography: {
@@ -18,8 +18,8 @@ export class UserSignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: ''
+      username: "",
+      password: ""
     };
   }
 
@@ -38,7 +38,7 @@ export class UserSignIn extends Component {
 
     const axiosConfig = {
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }
     };
 
@@ -52,12 +52,12 @@ export class UserSignIn extends Component {
         if (response.data) {
           const user = response.data;
           // move to search patients if doctor or patient details of patient
-          if (user.role === 'doctor') {
+          if (user.role === "doctor") {
             // route to search patient
-            this.props.history.push('/searchpatients');
+            this.props.history.push("/searchpatients");
           }
 
-          if (user.role === 'patient') {
+          if (user.role === "patient") {
             // fetch the patient details with user.id
             // route to patient details
             axios
@@ -68,7 +68,7 @@ export class UserSignIn extends Component {
               .then(response => {
                 if (response.data) {
                   this.props.history.push({
-                    pathname: '/patientdetails',
+                    pathname: "/patientdetails",
                     state: { patient: response.data, readOnly: false }
                   });
                 }
@@ -78,7 +78,7 @@ export class UserSignIn extends Component {
               });
           }
         } else {
-          console.log('no login');
+          console.log("no login");
         }
       })
       .catch(err => {
@@ -92,9 +92,9 @@ export class UserSignIn extends Component {
         <MuiThemeProvider theme={theme}>
           {/* <SearchPatients patients={this.state.patients} patientClicked={this.patientClicked} /> */}
 
-          <AppBar position='static' color='primary'>
+          <AppBar position="static" color="primary">
             <Toolbar>
-              <Typography variant='h5' color='inherit'>
+              <Typography variant="h5" color="inherit">
                 Tempus
               </Typography>
             </Toolbar>
@@ -102,27 +102,27 @@ export class UserSignIn extends Component {
 
           <br />
           <TextField
-            id='standard-username'
-            label='Username'
-            margin='normal'
-            onChange={this.handleChange('username')}
+            id="standard-username"
+            label="Username"
+            margin="normal"
+            onChange={this.handleChange("username")}
           />
           <br />
           <TextField
-            id='standard-password-input'
-            label='Password'
-            type='password'
-            autoComplete='current-password'
-            margin='normal'
-            onChange={this.handleChange('password')}
+            id="standard-password-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            margin="normal"
+            onChange={this.handleChange("password")}
           />
           <br />
           <br />
           <br />
           <Button
-            variant='contained'
-            size='medium'
-            color='primary'
+            variant="contained"
+            size="medium"
+            color="primary"
             onClick={this.userSignIn}
           >
             Login

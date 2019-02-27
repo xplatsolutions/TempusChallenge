@@ -1,28 +1,27 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import axios from 'axios';
+import React, { Component, Fragment } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
+import Typography from "@material-ui/core/Typography";
+import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import axios from "axios";
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: "100%",
     backgroundColor: theme.palette.background.paper
   },
   inline: {
-    display: 'inline'
+    display: "inline"
   }
 });
 
 export class PatientsList extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -33,7 +32,7 @@ export class PatientsList extends Component {
   componentDidMount() {
     const axiosConfig = {
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       }
     };
 
@@ -49,14 +48,14 @@ export class PatientsList extends Component {
 
   onPatientClick = patient => e => {
     this.props.history.push({
-        pathname: '/patientdetails',
-        state: { patient: patient, readOnly: true }
+      pathname: "/patientdetails",
+      state: { patient: patient, readOnly: true }
     });
   };
 
   render() {
     const { classes } = this.props;
-    
+
     return (
       <List className={classes.root}>
         <Fragment>
@@ -64,7 +63,7 @@ export class PatientsList extends Component {
             <ListItem
               button
               divider
-              alignItems='flex-start'
+              alignItems="flex-start"
               onClick={this.onPatientClick(patient)}
             >
               <ListItemAvatar>
@@ -75,9 +74,9 @@ export class PatientsList extends Component {
                 secondary={
                   <React.Fragment>
                     <Typography
-                      component='span'
+                      component="span"
                       className={classes.inline}
-                      color='textPrimary'
+                      color="textPrimary"
                     >
                       {patient.mailingAddress} - {patient.age}
                     </Typography>

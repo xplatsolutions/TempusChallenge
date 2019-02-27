@@ -7,7 +7,7 @@ router.get("/:id", (req, res, next) => {
   const userMongoId = new mongoose.Types.ObjectId(req.params.id);
 
   Patient.findOne({ userId: userMongoId })
-    .populate('userId', '_id username')
+    .populate("userId", "_id username")
     .exec()
     .then(patient => {
       res.status(200).json(patient);
@@ -23,7 +23,7 @@ router.get("/:id", (req, res, next) => {
 
 router.get("/", (req, res, next) => {
   Patient.find()
-    .populate('userId', '_id username')
+    .populate("userId", "_id username")
     .exec()
     .then(patients => {
       res.status(200).json(patients);
